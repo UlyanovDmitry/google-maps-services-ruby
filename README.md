@@ -21,7 +21,9 @@ And then execute:
 Ruby code:
 
 ```ruby
-GoogleMaps::DistanceMatrix.new 'ул. Кольцова, 48, Грозный', 'пр. Калинина, 9, Пятигорск', GOOGLE_API_KEY
+@distance_matrix = GoogleMaps::DistanceMatrix.new 'ул. Кольцова, 48, Грозный', 'пр. Калинина, 9, Пятигорск', GOOGLE_API_KEY
+puts @distance_matrix.distance.text
+puts @distance_matrix.duration.text
 ```
 
 ## License
