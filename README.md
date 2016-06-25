@@ -9,14 +9,17 @@ Google Maps Distance Matrix API
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'google_maps'
+gem 'google_maps', git: 'git://github.com/DemonIT/google_maps.git'
 ```
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
 ## Usage
+
+Ruby code:
+GoogleMaps::DistanceMatrix.new 'ул. Кольцова, 48, Грозный', 'пр. Калинина, 9, Пятигорск', GOOGLE_API_KEY
 
 ## License
 
