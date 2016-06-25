@@ -19,7 +19,10 @@ And then execute:
 ## Usage
 
 Ruby code:
+
+```ruby
 GoogleMaps::DistanceMatrix.new 'ул. Кольцова, 48, Грозный', 'пр. Калинина, 9, Пятигорск', GOOGLE_API_KEY
+```
 
 ## License
 
