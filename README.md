@@ -38,7 +38,7 @@ The Status Code is recorded in the error code.
 ```ruby
 
   begin
-    distance_matrix = GoogleMaps::DistanceMatrix.new start_address, finish_address, google_api_key
+    distance_matrix = GoogleMaps::DistanceMatrix.new origins, destinations, google_api_key
   rescue GoogleMaps::GoogleMapsException => exp
     puts "Status Code: #{exp.message}"
   end
