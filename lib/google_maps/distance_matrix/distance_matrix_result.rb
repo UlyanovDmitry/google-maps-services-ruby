@@ -19,7 +19,7 @@ module GoogleMaps
     end
 
     def to_s
-      "#{self.origins} - #{self.destinations}: #{self.distance} #{self.duration}"
+      (self.status == 'OK') ? "#{self.distance} #{self.duration}" : self.status
     end
 
   end
