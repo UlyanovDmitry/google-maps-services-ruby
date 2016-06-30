@@ -8,7 +8,6 @@ module GoogleMaps
       raise ArgumentError, 'options is not class Hash' unless options.class.to_s == 'Hash'
       @origins = options['origins'].to_s
       @destinations = options['destinations'].to_s
-      puts "#{options['distance']}"
       @status = options['status'].to_s
       if @status == 'OK'
         @distance = Distance.new options['distance']
