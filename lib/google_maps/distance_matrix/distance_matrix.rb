@@ -13,16 +13,49 @@ module GoogleMaps
       @destinations = destinations
       @google_api_key = options[:key]
 
-      request_params = default_params.merge(options).merge({origins: self.origins.join('|'), destinations: self.destinations.join('|')})
-      response = GoogleMaps::GoogleConnect.get_response 'distancematrix', request_params
-
-      @status = response['status']
-      raise GoogleMaps::GoogleMapsException, self.status if self.status != 'OK'
-
       result = []
-      response['origin_addresses'].each_with_index do |first_address, row_item|
-        response['destination_addresses'].each_with_index do |second_address, elem_item|
-          result << DistanceMatrixResult.new({'origins' => first_address, 'destinations' => second_address}.merge(response['rows'][row_item]['elements'][elem_item]) )
+      limit_address_count = 8
+      origins_each_count = if self.origins.size > limit_address_count
+                             origins_each_count = self.origins.size/limit_address_count
+                             origins_each_count += 1 if origins_each_count*limit_address_count < self.origins.size
+                          else
+                            1
+                           end
+      origins_each_count.times do |limit_part_origins|
+        start_pos = limit_part_origins*limit_address_count
+        end_pos  = (limit_part_origins+1)*limit_address_count - 1
+        part_origins = self.origins[start_pos.to_i..end_pos.to_i]
+        if part_origins.any?
+
+          destinations_each_count = if self.destinations.size > limit_address_count
+                                      destinations_each_count = self.destinations.size/limit_address_count
+                                      destinations_each_count += 1 if destinations_each_count*limit_address_count < self.destinations.size
+                                    else
+                                      1
+                                    end
+          destinations_each_count.times do |limit_part_destinations|
+            start_pos = limit_part_destinations*limit_address_count
+            end_pos  = (limit_part_destinations+1)*limit_address_count - 1
+            part_destinations = self.destinations[start_pos.to_i..end_pos.to_i]
+            if part_destinations.any?
+
+
+              request_params = default_params.merge(options).merge({origins: part_origins.join('|'), destinations: part_destinations.join('|')})
+              response = GoogleMaps::GoogleConnect.get_response 'distancematrix', request_params
+
+              @status = response['status']
+              raise GoogleMaps::GoogleMapsException, self.status if self.status != 'OK'
+
+              response['origin_addresses'].each_with_index do |first_address, row_item|
+                response['destination_addresses'].each_with_index do |second_address, elem_item|
+                  result << DistanceMatrixResult.new({'origins' => first_address, 'destinations' => second_address}.merge(response['rows'][row_item]['elements'][elem_item]) )
+                end
+              end
+
+            end
+          end
+
+
         end
       end
       @result = result
