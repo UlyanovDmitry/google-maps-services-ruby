@@ -27,7 +27,7 @@ module GoogleMaps
             return res
           end
         else
-          raise raise GoogleMaps::GoogleMapsException, "HTTP Error Code: #{res.code}"
+          raise GoogleMaps::GoogleMapsException, "HTTP Error Code: #{res.code}"
         end
       end
 
