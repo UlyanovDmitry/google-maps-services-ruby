@@ -1,0 +1,18 @@
+PATH
+  remote: .
+  specs:
+    google-maps-services (0.1.6)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler
+  google-maps-services!
+
+BUNDLED WITH
+   1.16.3

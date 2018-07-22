@@ -21,7 +21,7 @@ And then execute:
 Ruby code:
 
 ```ruby
-distance_matrix = GoogleMaps::DistanceMatrix.new 'ул. Кольцова, 48, Грозный', 'пр. Калинина, 9, Пятигорск', GOOGLE_API_KEY
+distance_matrix = GoogleMaps::Services::DistanceMatrix.new 'ул. Кольцова, 48, Грозный', 'пр. Калинина, 9, Пятигорск', GOOGLE_API_KEY
 puts distance_matrix.distance.text
 puts distance_matrix.duration.text
 ```
@@ -38,8 +38,8 @@ The Status Code is recorded in the error code.
 ```ruby
 
   begin
-    distance_matrix = GoogleMaps::DistanceMatrix.new origins, destinations, google_api_key
-  rescue GoogleMaps::GoogleMapsException => exp
+    distance_matrix = GoogleMaps::Services::DistanceMatrix.new origins, destinations, google_api_key
+  rescue GoogleMaps::Services::Exception => exp
     puts "Status Code: #{exp.message}"
   end
 ```
