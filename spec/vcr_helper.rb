@@ -12,9 +12,9 @@ VCR.configure do |c|
 end
 
 DISTANCE_MATRIX_VCR = {
-    cassette_name: 'distance_matrix',
-    record: :once,
-    allow_playback_repeats: true,
-    erb: true,
-    match_requests_on: [:method, :uri, :body]
-}
+  cassette_name: 'distance_matrix',
+  record: :once,
+  allow_playback_repeats: true,
+  erb: true,
+  match_requests_on: %i[method uri body]
+}.freeze
