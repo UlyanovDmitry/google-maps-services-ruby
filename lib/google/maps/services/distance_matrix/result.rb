@@ -1,24 +1,19 @@
 module GoogleMaps
   module Services
     class DistanceMatrix::Result
-      attr_reader :origins, :destinations, :distance, :duration, :status
+      attr_reader :origin, :destination, :distance, :duration, :status
 
-      def initialize(options = {})
-        raise ArgumentError, 'options is not class Hash' unless options.class.to_s == 'Hash'
-        @origins = options['origins'].to_s
-        @destinations = options['destinations'].to_s
-        @status = options['status'].to_s
-        if @status == 'OK'
-          @distance = Distance.new options['distance']
-          @duration = Duration.new options['duration']
-        else
-          @distance = Distance.new text: '', value: ''
-          @duration = Duration.new text: '', value: ''
-        end
+      def initialize(origin:, destination:, status:, distance: {}, duration: {})
+        @origin = origin.to_s
+        @destination = destination.to_s
+        @status = status.to_s
+        @distance = Distance.new distance.symbolize_keys
+        @duration = Duration.new duration.symbolize_keys
+        @status = status.to_s
       end
 
       def to_s
-        (self.status == 'OK') ? "#{self.distance} #{self.duration}" : self.status
+        status == 'OK' ? "#{distance} #{duration}" : status
       end
     end
   end
