@@ -40,17 +40,21 @@ module GoogleMaps
 
       def request(origins, destinations, params)
         full_params = params.merge(origins: origins.join('|'), destinations: destinations.join('|'))
-        json_response = GoogleMaps::Services::Request.new(SERVICE_NAME, full_params).json_response
-
-        json_response['origin_addresses'].each_with_index do |first_address, row_item|
-          json_response['destination_addresses'].each_with_index do |second_address, elem_item|
-            fix_result_options = { origin: first_address, destination: second_address }
-            result_option = fix_result_options.merge(json_response['rows'][row_item]['elements'][elem_item].symbolize_keys)
-            @result << DistanceMatrix::Result.new(result_option)
-          end
-        end
+        json_parse GoogleMaps::Services::Request.new(SERVICE_NAME, full_params).json_response
       rescue GoogleMaps::Services::Exception => exp
         @result << DistanceMatrix::Result.new(origin: origins, destination: destinations, status: exp.message)
+      end
+
+      def json_parse(json_response)
+        json_response['origin_addresses'].each_with_index do |first_address, row_item|
+          json_response['destination_addresses'].each_with_index do |second_address, elem_item|
+            @result << DistanceMatrix::Result.new(
+              { origin: first_address, destination: second_address }.merge(
+                json_response['rows'][row_item]['elements'][elem_item].symbolize_keys
+              )
+            )
+          end
+        end
       end
     end
   end

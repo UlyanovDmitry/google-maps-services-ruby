@@ -37,8 +37,8 @@ describe GoogleMaps::Services::Request, vcr: DISTANCE_MATRIX_VCR do
   end
 
   context 'when route not found' do
-    let(:origins) { ''  }
-    let(:destinations) { ''  }
+    let(:origins) { '' }
+    let(:destinations) { '' }
 
     it { expect { subject }.to raise_error(GoogleMaps::Services::Exception) }
   end
