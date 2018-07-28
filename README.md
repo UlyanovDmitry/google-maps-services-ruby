@@ -1,7 +1,7 @@
 # GoogleMaps
 
 This helps you to work with
-Google Maps Distance Matrix API
+[Google Maps Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/intro)
 
 
 ## Installation
@@ -22,8 +22,9 @@ Ruby code:
 
 ```ruby
 distance_matrix = GoogleMaps::Services::DistanceMatrix.new 'ул. Кольцова, 48, Грозный', 'пр. Калинина, 9, Пятигорск', GOOGLE_API_KEY
-puts distance_matrix.distance.text
-puts distance_matrix.duration.text
+distance_matrix.result.each do |result_object|
+    puts "Distance: #{result_object.distance}; Duration: #{result_object.duration}"
+end
 ```
 
 ## Status Codes
@@ -39,6 +40,7 @@ The Status Code is recorded in the error code.
 
   begin
     distance_matrix = GoogleMaps::Services::DistanceMatrix.new origins, destinations, google_api_key
+    # ...
   rescue GoogleMaps::Services::Exception => exp
     puts "Status Code: #{exp.message}"
   end

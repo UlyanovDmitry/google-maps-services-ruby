@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    google-maps-services (0.1.6)
+    google-maps-services (0.1.7)
       activesupport
 
 GEM
